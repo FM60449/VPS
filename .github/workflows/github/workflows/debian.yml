@@ -1,0 +1,25 @@
+name: Debian VPS 6H
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360 # 6 heures max
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update system
+        run: |
+          sudo apt update
+          sudo apt install -y curl wget git
+
+      - name: Setup SSH with tmate
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: false
+
+      - name: Keep alive 6H
+        run: sleep 21600 # 6h en secondes
